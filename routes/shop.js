@@ -10,6 +10,9 @@ router.get('/', (req, res, next) => {
 		pageTitle: 'Shop',
 		path: '/',
 		prods: adminData.products,
+		hasProds: adminData.products.length > 0,
+		activeShop: true,
+		productCSS: true,
 	});
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 });

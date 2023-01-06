@@ -32,7 +32,9 @@
                     <button class="btn" type="submit">
                         <% if(editMode) { %>Update Product<% } else { %>Add Product<% } %>
                     </button>
-                    <input type="hidden" name="productId" value="<%=product.id%>">
+                    <% if(editMode){%>
+                        <input type="hidden" name="productId" value="<%=product.id%>">
+                        <%}%>
                 </form>
             </main>
             <%- include('../includes/end.ejs') %>

@@ -10,6 +10,7 @@
   "author": "Varun",
   "license": "ISC",
   "devDependencies": {
+    "@types/sequelize": "^4.28.14",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
@@ -17,6 +18,7 @@
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
     "mysql2": "^2.3.3",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "sequelize": "^6.28.0"
   }
 }

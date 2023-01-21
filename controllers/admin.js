@@ -1,11 +1,11 @@
-const { ObjectId } = require('mongodb');
 const Product = require('../models/product');
 
 exports.getAddProducts = (req, res, next) => {
 	res.render('admin/edit-product', {
-		pageTitle: 'Add product',
+		pageTitle: 'Add Product',
 		path: '/admin/add-product',
 		editMode: false,
+		isAuth: req.session.isLoggedIn,
 	});
 };
 
@@ -41,6 +41,7 @@ exports.getProducts = (req, res, next) => {
 				pageTitle: 'Admin Products',
 				path: '/admin/products',
 				prods: products,
+				isAuth: req.session.isLoggedIn,
 			});
 		})
 		.catch((err) => {
@@ -54,18 +55,22 @@ exports.getEditProducts = (req, res, next) => {
 		res.redirect('/');
 	}
 	const prodId = req.params.productId;
-	Product.findById(prodId).then((product) => {
-		if (!product) {
-			res.redirect('/');
-		}
-		console.log(product);
-		res.render('admin/edit-product', {
-			pageTitle: 'Edit product',
-			path: '/admin/edit-product',
-			product: product,
-			editMode: editMode,
+	Product.findById(prodId)
+		.then((product) => {
+			if (!product) {
+				return res.redirect('/');
+			}
+			res.render('admin/edit-product', {
+				pageTitle: 'Edit product',
+				path: '/admin/edit-product',
+				product: product,
+				editMode: editMode,
+				isAuth: req.session.isLoggedIn,
+			});
+		})
+		.catch((err) => {
+			console.log(err);
 		});
-	});
 };
 
 exports.postEditProduct = (req, res, next) => {

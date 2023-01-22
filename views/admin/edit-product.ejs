@@ -29,6 +29,7 @@
                             rows="5"><% if(editMode){ %><%=product.description%><% } %></textarea>
                     </div>
 
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button class="btn" type="submit">
                         <% if(editMode) { %>Update Product<% } else { %>Add Product<% } %>
                     </button>

@@ -4,6 +4,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -20,6 +22,7 @@ const store = new MongoDBStore({
 	collection: 'sessions',
 });
 const app = express();
+const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -34,6 +37,8 @@ app.use(
 		store: store,
 	})
 );
+app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
 	if (!req.session.user) {
@@ -49,6 +54,12 @@ app.use((req, res, next) => {
 		});
 });
 
+app.use((req, res, next) => {
+	res.locals.isAuth = req.session.isLoggedIn;
+	res.locals.csrfToken = req.csrfToken();
+	next();
+});
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
@@ -59,16 +70,6 @@ mongoose
 	.connect(MONGODB_URI)
 	.then((result) => {
 		console.log('Connected');
-		User.findOne().then((u) => {
-			if (!u) {
-				const user = new User({
-					name: 'Varun',
-					email: 'test@test.com',
-					cart: { items: [] },
-				});
-				user.save();
-			}
-		});
 		app.listen(3000);
 	})
 	.catch((err) => {

@@ -2,14 +2,14 @@ const { Schema, default: mongoose } = require('mongoose');
 const product = require('./product');
 
 const userSchema = new Schema({
-	name: {
-		type: String,
+    email: {
+        type: String,
 		required: true,
 	},
-	email: {
-		type: String,
-		required: true,
-	},
+    password: {
+        type: String,
+        required: true,
+    },
 	cart: {
 		items: [
 			{

@@ -15,7 +15,6 @@ router.post(
 			.isLength({ min: 3 })
 			.withMessage('Title must contain atleast 3 characters')
 			.trim(),
-		body('imageUrl', 'Invalid Image URL').isURL(),
 		body('price', 'Price can only be number').isFloat(),
 		body('description').isLength({ min: 10 }).trim(),
 	],
@@ -34,7 +33,6 @@ router.post(
 			.isLength({ min: 3 })
 			.withMessage('Title must contain atleast 3 characters')
 			.trim(),
-		body('imageUrl', 'Invalid Image URL').isURL(),
 		body('price', 'price can only be number').isFloat(),
 		body('description').isLength({ min: 10 }).trim(),
 	],

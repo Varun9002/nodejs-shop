@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator/check');
 const Product = require('../models/product');
 const fileHelper = require('../util/file');
+const ITEMS_PER_PAGE = 1;
 
 exports.getAddProducts = (req, res, next) => {
 	res.render('admin/edit-product', {
@@ -69,15 +70,23 @@ exports.postAddProducts = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-	Product.find({ userId: req.user._id })
-		// .select('title price -_id')
-		// .populate('userId', 'name')a
+	const page = +req.query.page;
+	let totalItems;
+	Product.countDocuments({ userId: req.user._id })
+		.then((numProducts) => {
+			totalItems = numProducts;
+			return Product.find({ userId: req.user._id })
+				.skip((page - 1) * ITEMS_PER_PAGE)
+				.limit(ITEMS_PER_PAGE);
+		})
 		.then((products) => {
-			res.render('admin/products', {
+			res.render('shop/product-list', {
 				pageTitle: 'Admin Products',
 				path: '/admin/products',
 				prods: products,
 				isAuth: req.session.isLoggedIn,
+				currentPage: page || 1,
+				lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
 			});
 		})
 		.catch((err) => {

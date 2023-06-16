@@ -1,0 +1,13 @@
+<section class="pagination">
+    <% if (currentPage-1> 1) { %>
+        <a href="?page=1">1</a> - - -
+        <% } %>
+            <% for(i=Math.max(currentPage-1,1);i <=Math.min(currentPage+1,lastPage); i++) {%>
+                <a href="?page=<%=i%>" <% if(currentPage===i) {%> class="active" <% } %> ><%=i%></a>
+                <% } %>
+                    <% if (currentPage + 1 < lastPage) { %>
+                        - - - <a href="?page=<%= lastPage %>">
+                            <%= lastPage %>
+                        </a>
+                        <% } %>
+</section>

@@ -240,6 +240,22 @@ form {
 	font-weight: 600;
 	color: rgb(255, 59, 59);
 }
+.pagination {
+	text-align: center;
+	margin-top: 2rem;
+}
+.pagination a {
+	display: inline-block;
+	text-decoration: none;
+	color: #00695c;
+	padding: 0.5rem;
+	border: 1px solid #00695c;
+	margin: 0 1rem;
+}
+.pagination a:is(:hover, :active, .active) {
+	background: #00695c;
+	color: white;
+}
 
 @media (min-width: 768px) {
 	.main-header__nav {
